@@ -1,0 +1,62 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int t,n, i;
+            double res,result;
+            
+            string first,second;
+
+            int k = 0;
+
+            Console.WriteLine("Введите первое число");
+            first = Console.ReadLine();
+            Console.WriteLine("Введите второе число");
+            second = Console.ReadLine();
+
+            char[] arr = first.ToCharArray();
+            Array.Reverse(arr);
+
+            char[] arr2 = second.ToCharArray();
+            Array.Reverse(arr2);
+
+            double[] resultMassiv = new double[Math.Max(first.Length, second.Length)];
+
+            for (t = 0; t < Math.Max(first.Length, second.Length); t++)
+            {
+                if (k == 1)
+                {
+                    res = Char.GetNumericValue(arr[t]) + Char.GetNumericValue(arr2[t]);
+                    res += 1;
+                }
+                else
+                {
+                    res = Char.GetNumericValue(arr[t]) + Char.GetNumericValue(arr2[t]);
+                }
+                if (res >= 10)
+                {
+                    k = 1;
+                    res -= 10;
+                    
+                }
+                else { k = 0; }
+                resultMassiv[t] = res;
+            }
+            Array.Reverse(resultMassiv);
+            for (int j = 0; j < Math.Max(first.Length, second.Length); j++)
+            {
+                Console.Write(resultMassiv[j]);
+            }
+            Console.Read();
+        }
+        
+    }
+}
