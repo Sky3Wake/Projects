@@ -1,0 +1,138 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication1
+{
+    class Program
+    {
+        
+
+        static void Main(string[] args)
+        {
+            int t,n, i;
+            double result;
+            string first, second;
+            int k = 0;
+
+            Console.WriteLine("Введите первое число");
+            first = Console.ReadLine();
+            Console.WriteLine("Введите второе число");
+            second = Console.ReadLine();
+
+            double[] resultMassiv = new double[Math.Max(first.Length, second.Length)];
+
+            Comparison(first,second,resultMassiv);
+            Console.Read();
+        }
+        static void Addition(string str1, string str2, double[] massiv)
+        {
+            char[] arr = str1.ToCharArray();
+            Array.Reverse(arr);
+            char[] arr2 = str2.ToCharArray();
+            Array.Reverse(arr2);
+
+            double res;
+            int k = 0;
+
+            for (int t = 0; t < Math.Max(str1.Length, str2.Length); t++)
+            {
+                if (k == 1)
+                {
+                    res = Char.GetNumericValue(arr[t]) + Char.GetNumericValue(arr2[t]);
+                    res += 1;
+                }
+                else
+                {
+                    res = Char.GetNumericValue(arr[t]) + Char.GetNumericValue(arr2[t]);
+                }
+                if (res >= 10)
+                {
+                    k = 1;
+                    res -= 10;
+
+                }
+                else { k = 0; }
+                massiv[t] = res;
+            }
+            Array.Reverse(massiv);
+            for (int j = 0; j < Math.Max(str1.Length, str2.Length); j++)
+            {
+                Console.Write(massiv[j]);
+            }
+        }
+        static void Subtraction(string str1,string str2,double[] massiv)
+        {
+            char[] arr = str1.ToCharArray();
+            Array.Reverse(arr);
+            char[] arr2 = str2.ToCharArray();
+            Array.Reverse(arr2);
+
+            double res;
+            int k = 0;
+
+            for (int t = 0; t < Math.Max(str1.Length, str2.Length); t++)
+            {
+                if (k == 1)
+                {
+                    
+                    res = Char.GetNumericValue(arr[t]) - Char.GetNumericValue(arr2[t]);
+                    res -= 1;
+
+                }
+                else
+                {
+                    res = Char.GetNumericValue(arr[t]) - Char.GetNumericValue(arr2[t]);
+                }
+                if (res < 0)
+                {
+                    k = 1;
+                    res += 10;
+                }
+                else { k = 0; }
+
+            massiv[t] = res;
+            }
+        }
+        static void Comparison(string str1, string str2,double[] massiv)
+        {
+            char[] arr = str1.ToCharArray();
+            Array.Reverse(arr);
+            char[] arr2 = str2.ToCharArray();
+            Array.Reverse(arr2);
+
+            int idx = 0, tmp = 0;
+
+            for (int i = 0; i < Math.Max(str1.Length, str2.Length); i++)
+            {
+                if (Char.GetNumericValue(arr[i]) > Char.GetNumericValue(arr2[i]))
+                {
+                    tmp++;
+                }
+                else { idx++; }
+            }
+            if (tmp > idx)
+            {
+                Subtraction(str1, str2, massiv);
+                Array.Reverse(massiv);
+                for (int j = 0; j < Math.Max(str1.Length, str2.Length); j++)
+                {
+                    Console.Write(massiv[j]);
+                }
+            }
+            else
+            {
+                Subtraction(str2, str1, massiv);
+                Array.Reverse(massiv);
+                Console.Write("-");
+                for (int j = 0; j < Math.Max(str1.Length, str2.Length); j++)
+                {
+                    Console.Write(massiv[j]);
+                }
+            }
+
+        }
+    }
+}
