@@ -1,0 +1,78 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication1
+{
+    class Program
+    {
+
+
+        static void Main(string[] args)
+        {
+            string first, second;
+
+            Console.WriteLine("Введите первое число");
+            first = Console.ReadLine();
+            Console.WriteLine("Введите второе число");
+            second = Console.ReadLine();
+
+            int skoko = 0;
+            if (first.Length > second.Length)
+            {
+                skoko = first.Length - second.Length;
+                for (int i = 0; i < skoko; i++)
+                {
+                    second = String.Format("{0}" + second, 0);
+                }
+            }
+            else if (first.Length < second.Length)
+            {
+                skoko = second.Length - first.Length;
+                for (int i = 0; i < skoko; i++)
+                {
+                    first = String.Format("{0}" + first, 0);
+                }
+            }
+            Console.WriteLine(Comparison(first,second));
+            //double[] resultMassiv = new double[first.Length];
+            Console.Read();
+        }
+        static int Comparison(string str1,string str2)
+        {
+            char[] arr = str1.ToCharArray();
+            char[] arr2 = str2.ToCharArray();
+            int k = 0;
+            int returned = 0;
+            for(int i = 0;i < str1.Length;i++)
+            {
+                if (Char.GetNumericValue(arr[i]) != Char.GetNumericValue(arr2[i]))
+                {
+                    if (Char.GetNumericValue(arr[i]) > Char.GetNumericValue(arr2[i]))
+                    {
+                        Console.WriteLine("[Debug]: Max = " + str1);
+                        Console.WriteLine("[Debug]: Min = " + str2);
+                        returned = 1;
+                        continue;
+                    }
+                    else if (Char.GetNumericValue(arr[i]) < Char.GetNumericValue(arr2[i]))
+                    {
+                        Console.WriteLine("[Debug]: Max = " + str2);
+                        Console.WriteLine("[Debug]: Min = " + str1);
+                        returned = -1;
+                        continue;
+                    }
+                }
+                k++;
+                if (k == str1.Length)
+                {
+                    Console.WriteLine("[Debug]: Числа равны");
+                    returned = 0;
+                }
+            }
+            return returned;
+        }
+    }
+}
