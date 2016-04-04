@@ -1,0 +1,168 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication1
+{
+    class Program
+    {
+
+
+        static void Main(string[] args)
+        {
+            string first, second;
+            Console.WriteLine("Введите первое число");
+            first = Console.ReadLine();
+            Console.WriteLine("Введите второе число");
+            second = Console.ReadLine();
+
+            double[] resultMassiv = new double[Math.Max(first.Length, second.Length)];
+            Subtraction(first, second, resultMassiv);
+
+            Console.Read();
+        }
+        static void Addition(string str1, string str2, double[] massiv)
+        {
+            double res;
+            int k = 0;
+            Normalize(ref str1,ref str2);
+
+            char[] arr = str1.ToCharArray();
+            Array.Reverse(arr);
+            char[] arr2 = str2.ToCharArray();
+            Array.Reverse(arr2);
+            for (int t = 0; t < str1.Length; t++)
+            {
+                if (k == 1)
+                {
+                    res = Char.GetNumericValue(arr[t]) + Char.GetNumericValue(arr2[t]);
+                    res += 1;
+                }
+                else
+                {
+                    res = Char.GetNumericValue(arr[t]) + Char.GetNumericValue(arr2[t]);
+                }
+                if (res >= 10)
+                {
+                    k = 1;
+                    res -= 10;
+
+                }
+                else { k = 0; }
+                massiv[t] = res;
+            }
+            Output(massiv);
+        }
+        static void Subtraction(string str1, string str2, double[] massiv)
+        {
+            double res;
+            int k = 0;
+
+            Normalize(ref str1, ref str2);
+
+            string Max = "";
+            string Min = "";
+            string prefi = "";
+            Comparison(ref str1, ref str2, ref Max,ref Min,ref prefi);
+            char[] max = Max.ToCharArray();
+            Array.Reverse(max);
+            char[] min = Min.ToCharArray();
+            Array.Reverse(min);
+            for (int t = 0; t < str1.Length; t++)
+            {
+                if (k == 1)
+                {
+
+                    res = Char.GetNumericValue(max[t]) - Char.GetNumericValue(min[t]);
+                    res -= 1;
+                }
+                else
+                {
+                    res = Char.GetNumericValue(max[t]) - Char.GetNumericValue(min[t]);
+                }
+                if (res < 0)
+                {
+                    k = 1;
+                    res += 10;
+                }
+                else { k = 0; }
+
+                massiv[t] = res;
+            }
+            
+            Output(massiv,prefi);
+        }
+        static void Comparison(ref string str1, ref string str2, ref string maxx, ref string minn, ref string pref)
+        {
+            char[] arr = str1.ToCharArray();
+            Array.Reverse(arr);
+            char[] arr2 = str2.ToCharArray();
+            Array.Reverse(arr2);
+            int k = 0;
+            for(int i = 0;i < str1.Length;i++)
+            {
+                if (Char.GetNumericValue(arr[i]) != Char.GetNumericValue(arr2[i]))
+                {
+                    if (Char.GetNumericValue(arr[i]) > Char.GetNumericValue(arr2[i]))
+                    {
+                        maxx = str1;
+                        minn = str2;
+                        pref = "";
+                        continue;
+                    }
+                    else if (Char.GetNumericValue(arr[i]) < Char.GetNumericValue(arr2[i]))
+                    {
+                        maxx = str2;
+                        minn = str1;
+                        pref = "-";
+                        continue;
+                    }
+                }
+                k++;
+                if (k == str1.Length)
+                {
+                    maxx = str1;
+                    minn = str1;
+                    pref = "";
+                }
+            }
+            Console.WriteLine("[Debug]: Max = " + maxx);
+            Console.WriteLine("[Debug]: Min = " + minn);
+        }
+        static void Output(double[] massiv, string pref = "")
+        {
+            Array.Reverse(massiv);
+            Console.Write(pref);
+            for (int j = 0; j < massiv.Length; j++)
+            {
+                Console.Write(massiv[j]);
+            }
+        }
+        static void Normalize(ref string str1, ref string str2)
+        {
+            int skoko = 0;
+            if (str1.Length > str2.Length)
+            {
+                skoko = str1.Length - str2.Length;
+                for (int i = 0; i < skoko; i++)
+                {
+                    str2 = String.Format("{0}" + str2, 0);
+
+                }
+
+            }
+            else if (str1.Length < str2.Length)
+            {
+                skoko = str2.Length - str1.Length;
+                for (int i = 0; i < skoko; i++)
+                {
+                    str1 = String.Format("{0}" + str1, 0);
+
+                }
+
+            }
+        }
+    }
+}
