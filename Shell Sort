@@ -1,0 +1,55 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication6
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int k, l, n;
+            int[] array = new int[20];
+            Random r = new Random();
+            Console.WriteLine("Исходный массив массив:");
+            for (int i = 0; i < 20; i++)
+            {
+                array[i] = r.Next(20);
+            }
+            for (int i = 0; i < 20; i++)
+            {
+                Console.Write(array[i] + " ");
+            }
+            Console.WriteLine();
+            Console.WriteLine("Отсортированный массив:");
+            shellSort(array);
+            Console.ReadKey();
+        }
+        static void shellSort(int[] arr)
+        {
+            int j;
+            int step = arr.Length / 2;
+            while (step > 0)
+            {
+                for (int i = 0; i < (arr.Length - step); i++)
+                {
+                    j = i;
+                    while ((j >= 0) && (arr[j] > arr[j + step]))
+                    {
+                        int tmp = arr[j];
+                        arr[j] = arr[j + step];
+                        arr[j + step] = tmp;
+                        j -= step;
+                    }
+                }
+                step = step / 2;
+            }
+            for (int i = 0; i < 20; i++)
+            {
+                Console.Write(arr[i] + " ");
+            }
+        }
+    }
+}
