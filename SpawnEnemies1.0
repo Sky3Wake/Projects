@@ -1,0 +1,90 @@
+using UnityEngine;
+using System.Collections;
+
+public class SpawnEnemies : MonoBehaviour {
+
+	public CircleManipulation CircleManipul;
+	private Vector2 SpawnPos;
+	public GameObject Enemy;
+	private GameObject EnemyMak;
+	public GameObject Circle;
+	private Object clone;
+	public bool Created;
+	public float Spawnspeed = 4;
+	private int SpawnEnemy;
+	public float timerSec;
+	public int timerMin;
+	public float CoefDifficult = 0.005f;
+
+	// Use this for initialization
+	void Start () 
+	{
+		
+	}
+	void Update () 
+	{
+		if(CircleManipul.inGame)
+		{
+			timerSec += Time.deltaTime;
+			if(timerSec > 59.0f)
+			{
+				timerMin++;
+				timerSec = 0.0f;
+			}
+			if(!IsInvoking("Spawn") && !Created)
+			{
+				Invoke("Spawn", Spawnspeed); //выполняем sec каждые 5 секунд
+			}
+			if (Created) 
+			{
+				Vector2 newPosition = (Circle.transform.position - EnemyMak.transform.position) * CoefDifficult * Time.deltaTime;
+				EnemyMak.transform.Translate (newPosition);
+			}
+		}
+
+	}
+	void Spawn()
+	{
+		//int CurrentSpawn = Random.Range (0,1);
+		SpawnEnemy = Random.Range (0,5);
+		switch (SpawnEnemy) 
+		{
+			case 0:
+			{
+				SpawnPos = new Vector2 (Random.Range(-183f,-183f),Random.Range(386f,784f));
+				break;	
+			}
+			case 1:
+			{
+				SpawnPos = new Vector2 (Random.Range(-183f,580f),Random.Range(784f,784f));
+				break;
+			}
+			case 2:
+			{
+				SpawnPos = new Vector2 (Random.Range(580f,580f),Random.Range(386f,784f));
+				break;
+			}
+			case 3:
+			{
+				SpawnPos = new Vector2 (Random.Range(-180f,-180f),Random.Range(-175f,246f));
+				break;
+			}
+			case 4:
+			{
+				SpawnPos = new Vector2 (Random.Range(-180f,522f),Random.Range(-175f,-175f));
+				break;
+			}
+			case 5:
+			{
+				SpawnPos = new Vector2 (Random.Range(528f,528f),Random.Range(-19f,225f));
+				break;
+			}
+		}
+		clone = Instantiate (Enemy, SpawnPos, Quaternion.identity);
+		EnemyMak = (GameObject)clone;
+		Created = true;
+		CoefDifficult += 0.01f;
+		if(Spawnspeed > 1.0f)
+			Spawnspeed -= 0.01f;
+	}
+}
