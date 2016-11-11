@@ -1,0 +1,81 @@
+using UnityEngine;
+using System.Collections;
+using UnityEngine.Events;
+using UnityEngine.UI;
+
+public class CircleManipulation : MonoBehaviour {
+
+	public SpawnEnemies SpawnEnemy;
+	public GameObject player;
+	public Text Bill;
+	public Text HP;
+	public Text Timer;
+	public Text Best;
+	public int HealthPoint = 5;
+	public int Points = 0;
+	public int best = 0;
+	public float CircleVelocity;
+	public bool inGame = true;
+
+
+
+
+
+	// Use this for initialization
+	void Start () 
+	{
+		best = PlayerPrefs.GetInt ("Best");
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		if (inGame) 
+		{
+			
+			if (Input.GetKey (KeyCode.LeftArrow)) 
+			{
+				Move (1);
+			} 
+			else if (Input.GetKey (KeyCode.RightArrow)) 
+			{
+				Move (-1);
+			}
+			Timer.text = SpawnEnemy.timerSec.ToString (SpawnEnemy.timerMin + ":00");
+		} 
+		else 
+		{
+			
+		}
+		Best.text = best.ToString ();
+		Bill.text = Points.ToString ();
+		HP.text = HealthPoint.ToString ();
+	}
+	void OnTriggerEnter2D(Collider2D other) 
+	{
+		if (other.gameObject.tag == "Enemy") 
+		{
+			Destroy (other.gameObject);
+			SpawnEnemy.Created = false;
+			HealthPoint -= 1;
+			if (HealthPoint == 0) 
+			{
+				GameOver ();
+			}
+		}
+	}
+	void Move(int Forward)
+	{
+		Vector3 newRotation = new Vector3 (player.transform.rotation.x, player.transform.rotation.y, player.transform.rotation.z + CircleVelocity) * (Forward);
+		player.transform.Rotate (newRotation * Time.deltaTime);
+	}
+	void GameOver()
+	{
+		if (Points > best) 
+		{
+			best = Points;
+			PlayerPrefs.SetInt ("Best",best);
+		}
+		inGame = false;
+		Debug.Log ("You lose!");
+	}
+}
