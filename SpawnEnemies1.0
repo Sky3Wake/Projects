@@ -14,7 +14,7 @@ public class SpawnEnemies : MonoBehaviour {
 	private int SpawnEnemy;
 	public float timerSec;
 	public int timerMin;
-	public float CoefDifficult = 0.005f;
+	public float CoefDifficult = 0.015f;
 
 	// Use this for initialization
 	void Start () 
@@ -37,8 +37,11 @@ public class SpawnEnemies : MonoBehaviour {
 			}
 			if (Created) 
 			{
-				Vector2 newPosition = (Circle.transform.position - EnemyMak.transform.position) * CoefDifficult * Time.deltaTime;
-				EnemyMak.transform.Translate (newPosition);
+				//Vector2 newPosition = (Circle.transform.position - EnemyMak.transform.position) * CoefDifficult * Time.deltaTime;
+				//EnemyMak.transform.Translate (newPosition);
+				float x = Mathf.Lerp(EnemyMak.transform.position.x,Circle.transform.position.x, CoefDifficult);
+				float y = Mathf.Lerp(EnemyMak.transform.position.y,Circle.transform.position.y, CoefDifficult);
+				EnemyMak.transform.position = new Vector2 (x,y);
 			}
 		}
 
@@ -51,39 +54,40 @@ public class SpawnEnemies : MonoBehaviour {
 		{
 			case 0:
 			{
-				SpawnPos = new Vector2 (Random.Range(-5.71f,-5.71f),Random.Range(1.33f,6.7f));
+				SpawnPos = new Vector2 (Random.Range(-183f,-183f),Random.Range(386f,784f));
 				break;	
 			}
 			case 1:
 			{
-				SpawnPos = new Vector2 (Random.Range(-5.71f,5.33f),Random.Range(6.7f,6.7f));
+				SpawnPos = new Vector2 (Random.Range(-183f,580f),Random.Range(784f,784f));
 				break;
 			}
 			case 2:
 			{
-				SpawnPos = new Vector2 (Random.Range(5.32f,5.32f),Random.Range(1.33f,6.7f));
+				SpawnPos = new Vector2 (Random.Range(580f,580f),Random.Range(386f,784f));
 				break;
 			}
 			case 3:
 			{
-				SpawnPos = new Vector2 (Random.Range(-5.71f,-5.71f),Random.Range(-1.3f,-7.7f));
+				SpawnPos = new Vector2 (Random.Range(-180f,-180f),Random.Range(-175f,246f));
 				break;
 			}
 			case 4:
 			{
-				SpawnPos = new Vector2 (Random.Range(-4.71f,5.29f),Random.Range(-7.7f,-7.7f));
+				SpawnPos = new Vector2 (Random.Range(-180f,522f),Random.Range(-175f,-175f));
 				break;
 			}
 			case 5:
 			{
-				SpawnPos = new Vector2 (Random.Range(5.29f,5.29f),Random.Range(-1.3f,-7.7f));
+				SpawnPos = new Vector2 (Random.Range(528f,528f),Random.Range(-19f,225f));
 				break;
 			}
 		}
 		clone = Instantiate (Enemy, SpawnPos, Quaternion.identity);
 		EnemyMak = (GameObject)clone;
 		Created = true;
-		CoefDifficult += 0.01f;
+		if(CoefDifficult < 0.03f)
+			CoefDifficult += 0.0005f;
 		if(Spawnspeed > 1.0f)
 			Spawnspeed -= 0.01f;
 	}
