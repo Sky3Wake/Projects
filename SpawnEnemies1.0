@@ -19,7 +19,7 @@ public class SpawnEnemies : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		
+
 	}
 	void Update () 
 	{
@@ -49,37 +49,27 @@ public class SpawnEnemies : MonoBehaviour {
 	void Spawn()
 	{
 		//int CurrentSpawn = Random.Range (0,1);
-		SpawnEnemy = Random.Range (0,5);
+		SpawnEnemy = Random.Range (0,4);
 		switch (SpawnEnemy) 
 		{
-			case 0:
+		case 0:
 			{
-				SpawnPos = new Vector2 (Random.Range(-183f,-183f),Random.Range(386f,784f));
+				SpawnPos = new Vector2 (Random.Range(-3.263f,-3.263f),Random.Range(5.263f,-5.282f));
 				break;	
 			}
-			case 1:
+		case 1:
 			{
-				SpawnPos = new Vector2 (Random.Range(-183f,580f),Random.Range(784f,784f));
+				SpawnPos = new Vector2 (Random.Range(-3.263f,3.282f),Random.Range(5.263f,5.263f));
 				break;
 			}
-			case 2:
+		case 2:
 			{
-				SpawnPos = new Vector2 (Random.Range(580f,580f),Random.Range(386f,784f));
+				SpawnPos = new Vector2 (Random.Range(3.282f,3.282f),Random.Range(5.263f,-5.282f));
 				break;
 			}
-			case 3:
+		case 3:
 			{
-				SpawnPos = new Vector2 (Random.Range(-180f,-180f),Random.Range(-175f,246f));
-				break;
-			}
-			case 4:
-			{
-				SpawnPos = new Vector2 (Random.Range(-180f,522f),Random.Range(-175f,-175f));
-				break;
-			}
-			case 5:
-			{
-				SpawnPos = new Vector2 (Random.Range(528f,528f),Random.Range(-19f,225f));
+				SpawnPos = new Vector2 (Random.Range(-3.263f,3.282f),Random.Range(-5.282f,-5.282f));
 				break;
 			}
 		}
